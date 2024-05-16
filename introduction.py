@@ -13,9 +13,9 @@ class Introduction:
 
         font_path = get_path('./font/LycheeSoda.ttf')
         self.intro = True
-        self.font1 = pygame.font.Font(font_path, 55)
-        self.font2 = pygame.font.Font(font_path, 30)
-        self.screen = pygame.display.set_mode((SCREEN_WIDTH, SCREEN_HEIGHT))
+        self.font1 = pygame.font.Font(font_path, int(SCREEN_WIDTH/8.7))
+        self.font2 = pygame.font.Font(font_path, int(SCREEN_WIDTH/16))
+        self.screen = pygame.display.set_mode((SCREEN_WIDTH, SCREEN_HEIGHT), pygame.FULLSCREEN)
         self.display_surface = pygame.display.get_surface()
         self.grass = Grass()
         self.grass.run()
@@ -24,6 +24,7 @@ class Introduction:
     def setup(self):
         # create text surfaces
         if self.intro:
+
             self.grass.run2()
             self.TASH_text = self.font1.render("Welcome to T.A.S.H", False, 'White')
             self.info_text = self.font2.render('To Assist Smoking Cessation Habits', False, 'White')
