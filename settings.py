@@ -11,7 +11,9 @@ BACKGROUND_C = (27, 96, 42)
 GRASS_W = 200
 GRASS_H = 240
 
-#Starting values
+#Event Handlers
 intro = True
 home = False
 
+#Player info
+usage = 0

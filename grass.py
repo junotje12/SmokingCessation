@@ -43,6 +43,7 @@ class Grass:
         # demo loop
 
     def run2(self):
+            self.attempt()
         #while True:
             # calc dt
             dt = time.time() - self.start

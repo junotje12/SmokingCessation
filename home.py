@@ -14,8 +14,8 @@ class Home:
         if self.worth:
             print('im working here')
 
-            settings.GRASS_W = 10
-            settings.GRASS_H = 10
+            settings.GRASS_W = 100
+            settings.GRASS_H = 120
             self.worth = False
         #self.screen.fill(settings.BACKGROUND_C)
 
