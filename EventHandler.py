@@ -1,8 +1,15 @@
-class Event1:
+from introduction import Introduction
+class Event:
     def __init__(self):
-        self.real = True
+        self.homes = True
+        self.intro = False
+        self.introduction = Introduction()
+
+    def introductions(self):
+        self.intro = True
+        self.introduction.setup()
 
 
-    def fix(self):
-        print('progress')
-        self.real = False
+    def home(self):
+       # print('progress')
+        self.homes = False
