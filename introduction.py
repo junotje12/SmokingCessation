@@ -1,12 +1,13 @@
 import pygame
+
 import grassdata
 from settings import *
 from support import get_path
 from grass import Grass
 import settings
-import EventHandler
 import pygame
 from pygame.locals import *
+from home import Home
 
 class Introduction:
     def __init__(self):
@@ -17,6 +18,7 @@ class Introduction:
         self.font2 = pygame.font.Font(font_path, int(SCREEN_WIDTH/16))
         self.screen = pygame.display.set_mode((SCREEN_WIDTH, SCREEN_HEIGHT), pygame.FULLSCREEN)
         self.display_surface = pygame.display.get_surface()
+        self.home = Home()
         self.grass = Grass()
         self.grass.run()
         self.setup()
@@ -52,7 +54,10 @@ class Introduction:
             self.input()
 
         else:
-           EventHandler.Event.home(self)
+            print('hi')
+            settings.home = True
+            settings.intro = False
+            #self.home.start()
 
     def input(self):
 

@@ -13,16 +13,20 @@ import grassdata
 class Grass:
 
     def __init__(self):
-        self.screen = pygame.display.set_mode((settings.SCREEN_WIDTH, settings.SCREEN_HEIGHT))
-        self.display = pygame.Surface((200,260))
+        self.screen = pygame.display.set_mode((settings.SCREEN_WIDTH, settings.SCREEN_HEIGHT), pygame.RESIZABLE)
+
+        self.attempt()
         self.clock = pygame.time.Clock()
 
-    # set up the grass manager and enable shadows
+        # set up the grass manager and enable shadows
         self.gm = grassdata.GrassManager('grass', tile_size=10, stiffness=600, max_unique=5, place_range=[0, 1])
         self.gm.enable_ground_shadows(shadow_radius=4, shadow_color=(0, 0, 1), shadow_shift=(1, 2))
         self.scroll = [0, 0]
         self.t = 0
         self.start = time.time()
+    def attempt(self):
+        self.display = pygame.Surface((settings.GRASS_W, settings.GRASS_H))
+
     def run(self):
     # fill in the base square
         self.display.fill(settings.BACKGROUND_C)
@@ -33,7 +37,7 @@ class Grass:
                 x += 5
                 v = random.random()
                 if v > 0.1:
-                    self.gm.place_tile((x-5, y-3), int(v * 7), [0, 1, 2, 3, 4, 5])
+                    self.gm.place_tile((x-5, y-10), int(v * 7), [0, 1, 2, 3, 4, 5])
 
         self.rot_function = lambda x, y: int(math.sin(self.t / 60 + x / 100) * 15)
         # demo loop
@@ -56,7 +60,7 @@ class Grass:
             self.gm.update_render(self.display, dt, offset=self.scroll, rot_function=self.rot_function)
 
             # increment master time
-            self.t += dt * 100
+            self.t += dt * 45
 
             # render
             self.screen.blit(pygame.transform.scale(self.display, self.screen.get_size()), (0, 0))

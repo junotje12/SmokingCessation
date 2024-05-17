@@ -1,15 +1,22 @@
 from introduction import Introduction
+from home import Home
+import settings
 class Event:
     def __init__(self):
         self.homes = True
-        self.intro = False
+        self.intro = settings.intro
         self.introduction = Introduction()
+        self.home = Home()
 
     def introductions(self):
-        self.intro = True
-        self.introduction.setup()
+        if settings.intro:
+            self.introduction.setup()
 
+        elif settings.home:
+            self.home.start()
 
     def home(self):
        # print('progress')
-        self.homes = False
+        self.homes = True
+        self.home.start()
+
