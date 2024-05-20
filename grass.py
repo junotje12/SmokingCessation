@@ -19,7 +19,7 @@ class Grass:
         self.clock = pygame.time.Clock()
 
         # set up the grass manager and enable shadows
-        self.gm = grassdata.GrassManager('grass', tile_size=10, stiffness=600, max_unique=5, place_range=[0, 1])
+        self.gm = grassdata.GrassManager('grass', tile_size=13, stiffness=600, max_unique=5, place_range=[0, 1])
         self.gm.enable_ground_shadows(shadow_radius=4, shadow_color=(0, 0, 1), shadow_shift=(1, 2))
         self.scroll = [0, 0]
         self.t = 0

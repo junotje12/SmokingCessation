@@ -10,10 +10,14 @@ BACKGROUND_C = (27, 96, 42)
 #Grass
 GRASS_W = 200
 GRASS_H = 240
-
 #Event Handlers
 intro = True
 home = False
 
+#time
+starttime = 800
+
 #Player info
 usage = 0
+timer = 10
+carrots = 0

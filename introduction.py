@@ -70,6 +70,9 @@ class Introduction:
             self.grass.run2()
             self.nowsmoke = self.font2.render("what amount do you currently smoke", False, 'White')
             self.usage_text = self.font3.render(str(settings.usage), False, 'White')
+
+            if settings.usage <= 0:
+                settings.usage = 0
             if settings.usage >= 10:
                 self.blackwidth = SCREEN_WIDTH/2
                 self.usageXpos = 10
@@ -85,6 +88,9 @@ class Introduction:
                              self.text_usage.inflate(self.blackwidth, 320), 0, 4)
             pygame.draw.rect(self.display_surface, 'Black',
                              self.text_nowsmoke.inflate(10, 10), 0, 4)
+
+            pygame.draw.rect(self.display_surface, 'White',
+                             self.text_nowsmoke.inflate(10, 10), 4, 4)
 
             self.display_surface.blit(self.usage_text,(SCREEN_WIDTH/self.usageXpos, SCREEN_HEIGHT/40))
             self.display_surface.blit(self.nowsmoke, self.text_nowsmoke)
@@ -118,9 +124,3 @@ class Introduction:
 
                 if event.key == K_ESCAPE:
                     pygame.quit()
-
-
-
-
-
-

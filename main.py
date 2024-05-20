@@ -24,8 +24,11 @@ class Game:
 
     def run(self):
         while self.running:
+            #starttime = time.time()
             for event in pygame.event.get():
-
+                if event.type == QUIT:
+                    pygame.quit()
+                    sys.exit()
                 if event.type == KEYDOWN:
                     if event.key == K_ESCAPE:
                         pygame.quit()
