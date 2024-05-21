@@ -1,10 +1,13 @@
 import pygame
 from grass import Grass
 import settings
+from settings import *
 from pygame.locals import *
-import time
-class Home:
+from pathlib import Path
+from timer import Timer
+from support import get_path
 
+class Home:
     def __init__(self):
         self.screen = pygame.display.set_mode((settings.SCREEN_WIDTH, settings.SCREEN_HEIGHT))
         self.worth = True
@@ -19,11 +22,19 @@ class Home:
         self.currentpos = [self.pos1, self.pos2, self.pos3, self.pos4]
         self.CarrotCollect = False
 
+        font_path = get_path('./font/LycheeSoda.ttf')
+        self.font1 = pygame.font.Font(font_path, int(settings.SCREEN_WIDTH/8.7))
+
+
+        self.timer = Timer(settings.duration) # 10 seconds
+
+
     def start(self):
 
         if self.worth:
             print('im working here')
 
+            self.timer.activate()
             settings.GRASS_W = 60
             settings.GRASS_H = 90
             self.worth = False
@@ -31,13 +42,23 @@ class Home:
 
         self.grass2.run2()
         self.selecter()
-        #self.totaltime = round((time.time() - settings.starttime), 2)
 
-        #if settings.totaltime > 10:
-            #self.CarrotCollect = True
+        #self.timer.activate()
+        self.CarrotCollect = True
+        self.timer.update()
+        #timer is timer since activation devided by 10 seconds
+        if (int(pygame.time.get_ticks() - self.timer.start_time) / 1000) >= settings.duration/600:
+            self.carrot_timer = self.font1.render("Done!",
+                                                  False, 'White')
+        else:
+            self.carrot_timer = self.font1.render(str(int(pygame.time.get_ticks() - self.timer.start_time) / 1000), False, 'White')
 
+        self.text_carrot = self.carrot_timer.get_rect(
+            topleft =(20, settings.SCREEN_HEIGHT - 60))
 
-        #print("Total Time: " + str(self.totaltime))
+        pygame.draw.rect(self.screen, 'Black',
+                         self.text_carrot.inflate(10, 10), 0, 4)
+        self.screen.blit(self.carrot_timer, self.text_carrot)
         #print(settings.carrots)
         #pygame.display.update()
 
@@ -53,14 +74,14 @@ class Home:
         pass
     def smokingInd(self):
         print('Smoking Ind')
-        if self.CarrotCollect:
-            settings.carrots =+ 1
-            #self.starttime = time.time()
-            self.CarrotCollect = False
 
-        #self.currenttime = self.starttime
+        if self.timer.carrot:
+            settings.carrots = settings.carrots + 1
+            self.timer.activate()
+            self.timer.carrot = False
 
-            #self.currenttime = round((time.time() - self.currenttime),2)
+        print(settings.carrots)
+        self.timer.update()
 
         self.select = False
         pass
@@ -104,23 +125,6 @@ class Home:
                 if event.key == K_ESCAPE:
                     pygame.quit()
 
-class Carrot:
-    def __init__(self):
-        pass
 
-    def carrotTimer(self):
-        clock = pygame.time.Clock()
-
-        ADDCARROT = pygame.USEREVENT +1
-        pygame.time.set_timer(ADDCARROT, settings.starttime)
-
-        for event in pygame.event.get():
-            if event.type == ADDCARROT:
-
-                settings.carrots += 1
-
-            pygame.time.set_timer(ADDCARROT, 0)
-
-            pygame.time.set_timer(ADDCARROT, settings.starttime)
 
 

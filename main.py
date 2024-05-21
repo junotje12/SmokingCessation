@@ -34,14 +34,13 @@ class Game:
                         pygame.quit()
                         sys.exit()
 
-            #dt = self.clock.tick(FPS) / 1000
+            dt = self.clock.tick(FPS) / 1000
             self.action.introductions()
             pygame.display.update()
         else:
             print('youre doing great')
             pygame.quit()
             sys.exit()
-
 
 
 if __name__ == '__main__':

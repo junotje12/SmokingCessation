@@ -3,6 +3,7 @@ from pygame.math import Vector2
 # screen
 SCREEN_WIDTH = 480
 SCREEN_HEIGHT = 720
+FPS = 60
 
 #color
 BACKGROUND_C = (27, 96, 42)
@@ -15,7 +16,7 @@ intro = True
 home = False
 
 #time
-starttime = 800
+duration = 6000 #10 seconds
 
 #Player info
 usage = 0

@@ -96,6 +96,14 @@ class Introduction:
             self.display_surface.blit(self.nowsmoke, self.text_nowsmoke)
 
             pygame.display.update()
+        if settings.usage > 0 and settings.usage <= 5:
+            settings.duration = 6000
+        elif settings.usage > 5 and settings.usage <= 10:
+            settings.duration = 12000
+        elif settings.usage > 10:
+            settings.duration = 18000
+
+
 
 
     def input(self):
