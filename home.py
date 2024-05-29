@@ -6,6 +6,7 @@ from pygame.locals import *
 from pathlib import Path
 from timer import Timer
 from support import get_path
+from settingScreen import Settings
 
 class Home:
     def __init__(self):
@@ -21,9 +22,12 @@ class Home:
         self.pos2 = (settings.SCREEN_WIDTH/2 , settings.SCREEN_HEIGHT/2, settings.SCREEN_WIDTH/2 - 10, settings.SCREEN_HEIGHT/2 - 10)
         self.currentpos = [self.pos1, self.pos2, self.pos3, self.pos4]
         self.CarrotCollect = False
+        self.quit = False
 
         font_path = get_path('./font/LycheeSoda.ttf')
         self.font1 = pygame.font.Font(font_path, int(settings.SCREEN_WIDTH/8.7))
+
+        self.font2 = pygame.font.Font(font_path, int(settings.SCREEN_WIDTH/20))
 
 
         self.timer = Timer(settings.duration) # 10 seconds
@@ -53,19 +57,52 @@ class Home:
         else:
             self.carrot_timer = self.font1.render(str(int(pygame.time.get_ticks() - self.timer.start_time) / 1000), False, 'White')
 
+        self.carrot_amount = self.font1.render(str(settings.carrots), False,
+                                              'White')
+
         self.text_carrot = self.carrot_timer.get_rect(
             topleft =(20, settings.SCREEN_HEIGHT - 60))
+        self.amount_carrot = self.carrot_timer.get_rect(
+            topleft=(settings.SCREEN_WIDTH -50, settings.SCREEN_HEIGHT - 60))
 
         pygame.draw.rect(self.screen, 'Black',
                          self.text_carrot.inflate(10, 10), 0, 4)
+
+        pygame.draw.rect(self.screen, 'Black',
+                         self.amount_carrot.inflate(10, 10), 0, 4)
         self.screen.blit(self.carrot_timer, self.text_carrot)
+        self.screen.blit(self.carrot_amount, self.amount_carrot)
         #print(settings.carrots)
         #pygame.display.update()
 
     def settings(self):
+
+        self.screen.fill(settings.BACKGROUND_C)
+        self.settings_text = self.font2.render("settings", False, 'White')
+
+        self.user_amount_text = self.font2.render(f"starting usage amount: {settings.usage}", False, 'White')
+
+        self.text_user_amount = self.user_amount_text.get_rect(
+            topleft=(50, 60))
+        self.text_settings = self.settings_text.get_rect(
+            topleft=(50, 20))
+
+        pygame.draw.rect(self.screen, 'Black',
+                         self.text_user_amount.inflate(10, 10), 0, 4)
+
+        pygame.draw.rect(self.screen, 'Black',
+                         self.text_settings.inflate(10, 10), 0, 4)
+
+        self.screen.blit(self.user_amount_text, self.text_user_amount)
+        self.screen.blit(self.settings_text, self.text_settings)
+
         print('settings')
+        if self.quit:
+            self.screen.fill(settings.BACKGROUND_C)
+            self.select = False
+            self.quit = False
+
         print(settings.usage)
-        self.select = False
 
         pass
     def goals(self):
@@ -121,6 +158,9 @@ class Home:
 
                 if event.key == K_e:
                     self.select = True
+
+                if event.key == K_q:
+                    self.quit = True
 
                 if event.key == K_ESCAPE:
                     pygame.quit()
