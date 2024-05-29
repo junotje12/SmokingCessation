@@ -6,11 +6,12 @@ from pygame.locals import *
 from pathlib import Path
 from timer import Timer
 from support import get_path
+from gpiozero import PWMOutputDevice
 from settingScreen import Settings
 
 class Home:
     def __init__(self):
-        self.screen = pygame.display.set_mode((settings.SCREEN_WIDTH, settings.SCREEN_HEIGHT))
+        self.screen = pygame.display.set_mode((settings.SCREEN_WIDTH, settings.SCREEN_HEIGHT), pygame.FULLSCREEN)
         self.worth = True
         self.select = False
         self.grass2 = Grass()
@@ -23,7 +24,7 @@ class Home:
         self.currentpos = [self.pos1, self.pos2, self.pos3, self.pos4]
         self.CarrotCollect = False
         self.quit = False
-
+        self.motor = PWMOutputDevice(14)
         font_path = get_path('./font/LycheeSoda.ttf')
         self.font1 = pygame.font.Font(font_path, int(settings.SCREEN_WIDTH/8.7))
 
@@ -31,6 +32,7 @@ class Home:
 
 
         self.timer = Timer(settings.duration) # 10 seconds
+        self.vibration = 0
 
 
     def start(self):
@@ -107,7 +109,9 @@ class Home:
         pass
     def goals(self):
         print('goals')
-        self.select = False
+        self.vibration = 0.5
+        self.motor.value = self.vibration
+        #self.select = False
         pass
     def smokingInd(self):
         print('Smoking Ind')
@@ -125,6 +129,7 @@ class Home:
     def shop(self):
         print('shop')
         self.select = False
+
         pass
 
     def selecter(self):
