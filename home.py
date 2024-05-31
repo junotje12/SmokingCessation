@@ -24,7 +24,7 @@ class Home:
         self.currentpos = [self.pos1, self.pos2, self.pos3, self.pos4]
         self.CarrotCollect = False
         self.quit = False
-        self.motor = PWMOutputDevice(20)
+        self.motor = PWMOutputDevice(40)
         font_path = get_path('./font/LycheeSoda.ttf')
         self.font1 = pygame.font.Font(font_path, int(settings.SCREEN_WIDTH/8.7))
 
