@@ -6,7 +6,7 @@ from pygame.locals import *
 from pathlib import Path
 from timer import Timer
 from support import get_path
-from gpiozero import PWMOutputDevice
+#from gpiozero import PWMOutputDevice
 from settingScreen import Settings
 
 class Home:
@@ -24,7 +24,7 @@ class Home:
         self.currentpos = [self.pos1, self.pos2, self.pos3, self.pos4]
         self.CarrotCollect = False
         self.quit = False
-        self.motor = PWMOutputDevice(21)
+        #self.motor = PWMOutputDevice(21)
         font_path = get_path('./font/LycheeSoda.ttf')
         self.font1 = pygame.font.Font(font_path, int(settings.SCREEN_WIDTH/8.7))
 
@@ -110,8 +110,8 @@ class Home:
     def goals(self):
         print('goals')
         self.vibration = 0.5
-        self.motor.value = self.vibration
-        #self.select = False
+        #self.motor.value = self.vibration
+        self.select = False
         pass
     def smokingInd(self):
         print('Smoking Ind')
