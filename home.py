@@ -1,4 +1,5 @@
 import pygame
+import sys
 from grass import Grass
 import settings
 from settings import *
@@ -6,7 +7,7 @@ from pygame.locals import *
 from pathlib import Path
 from timer import Timer
 from support import get_path
-#from gpiozero import PWMOutputDevice
+from gpiozero import PWMOutputDevice
 from settingScreen import Settings
 
 class Home:
@@ -24,11 +25,11 @@ class Home:
         self.currentpos = [self.pos1, self.pos2, self.pos3, self.pos4]
         self.CarrotCollect = False
         self.quit = False
-        #self.motor = PWMOutputDevice(21)
+        self.motor = PWMOutputDevice(12)
         font_path = get_path('./font/LycheeSoda.ttf')
         self.font1 = pygame.font.Font(font_path, int(settings.SCREEN_WIDTH/8.7))
 
-        self.font2 = pygame.font.Font(font_path, int(settings.SCREEN_WIDTH/20))
+        self.font2 = pygame.font.Font(font_path, int(settings.SCREEN_WIDTH/14))
 
 
         self.timer = Timer(settings.duration) # 10 seconds
@@ -71,7 +72,7 @@ class Home:
                          self.text_carrot.inflate(10, 10), 0, 4)
 
         pygame.draw.rect(self.screen, 'Black',
-                         self.amount_carrot.inflate(10, 10), 0, 4)
+                         self.amount_carrot.inflate(10, 10), 0, 9)
         self.screen.blit(self.carrot_timer, self.text_carrot)
         self.screen.blit(self.carrot_amount, self.amount_carrot)
         #print(settings.carrots)
@@ -110,7 +111,7 @@ class Home:
     def goals(self):
         print('goals')
         self.vibration = 0.5
-        #self.motor.value = self.vibration
+        self.motor.value = self.vibration
         self.select = False
         pass
     def smokingInd(self):
@@ -151,6 +152,9 @@ class Home:
 
     def input(self):
         for event in pygame.event.get():
+            if event.type == QUIT:
+                pygame.quit()
+                sys.exit()
             if event.type == KEYDOWN:
 
                 if event.key == K_RIGHT:
@@ -169,6 +173,8 @@ class Home:
 
                 if event.key == K_ESCAPE:
                     pygame.quit()
+                    sys.exit()
+
 
 
 

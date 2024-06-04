@@ -13,7 +13,7 @@ import grassdata
 class Grass:
 
     def __init__(self):
-        self.screen = pygame.display.set_mode((settings.SCREEN_WIDTH, settings.SCREEN_HEIGHT))
+        self.screen = pygame.display.set_mode((settings.SCREEN_WIDTH, settings.SCREEN_HEIGHT), pygame.FULLSCREEN)
 
         self.attempt()
         self.clock = pygame.time.Clock()

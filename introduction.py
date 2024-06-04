@@ -23,7 +23,7 @@ class Introduction:
         self.font3 = pygame.font.Font(font_path, int(SCREEN_WIDTH/self.numberwidth))
         self.screen = pygame.display.set_mode((SCREEN_WIDTH, SCREEN_HEIGHT), pygame.FULLSCREEN)
         self.display_surface = pygame.display.get_surface()
-        self.slider_pos = (SCREEN_WIDTH/2 - 70, SCREEN_HEIGHT -50)
+        self.slider_pos = (SCREEN_WIDTH/2 - 70, SCREEN_HEIGHT -80)
 
         self.handle_x = self.slider_pos[0]
         self.handle_y = self.slider_pos[1] + 10 // 2
@@ -54,13 +54,13 @@ class Introduction:
                 midbottom=(SCREEN_WIDTH / 2, SCREEN_HEIGHT / 2))
             #pygame.draw.rect(self.display_surface, 'Black',
              #                self.text_TASH.inflate(10, 10), 0, 4)
-            pygame.draw.rect(self.display_surface, 'Black',
-                             self.text_info.inflate(10, 10), 0, 4)
+            #pygame.draw.rect(self.display_surface, 'Black',
+            #                 self.text_info.inflate(10, 10), 0, 4)
             pygame.draw.rect(self.display_surface, 'Black',
                              self.text_continue.inflate(10, 10), 0, 4)
 
             #self.display_surface.blit(self.TASH_text, self.text_TASH)
-            self.display_surface.blit(self.info_text, self.text_info)
+            #self.display_surface.blit(self.info_text, self.text_info)
             self.display_surface.blit(self.continue_text, self.text_continue)
             self.display_surface.blit(self.TASC,(0,0))
             pygame.display.update()
@@ -88,8 +88,6 @@ class Introduction:
             if settings.usage <= 0:
                 settings.usage = 0
 
-
-
             if settings.usage >= 10:
                 self.blackwidth = SCREEN_WIDTH/2 - 10
                 self.usageXpos = 10
@@ -116,11 +114,20 @@ class Introduction:
             pygame.draw.rect(self.display_surface, 'White',
                              self.text_nowsmoke.inflate(10, 10), 4, 4)
 
-            self.display_surface.blit(self.usage_text,(SCREEN_WIDTH/self.usageXpos , SCREEN_HEIGHT/40))
+            self.display_surface.blit(self.usage_text,(SCREEN_WIDTH/self.usageXpos , SCREEN_HEIGHT/24))
             self.display_surface.blit(self.nowsmoke, self.text_nowsmoke)
 
+            self.continue_text2 = self.font1.render("CONTINUE", False, 'White')
 
-# run slider here
+
+            self.text_continue2 = self.continue_text2.get_rect(
+                midbottom=(SCREEN_WIDTH / 2, SCREEN_HEIGHT -20))
+            pygame.draw.rect(self.display_surface, 'Black',
+                             self.text_continue2.inflate(10, 10), 0, 4)
+
+            self.display_surface.blit(self.continue_text2, self.text_continue2)
+
+            # run slider here
 
 
             pygame.draw.rect(self.screen, (255,255,255), (*self.slider_pos, SCREEN_WIDTH-100, 10))
@@ -145,11 +152,18 @@ class Introduction:
     def input(self):
 
         for event in pygame.event.get():
+            if event.type == QUIT:
+                pygame.quit()
+                sys.exit()
 
             if event.type == pygame.MOUSEBUTTONDOWN:
                 if self.intro:
                     if self.text_continue.collidepoint(event.pos):
                         self.intro = False
+                elif not self.amountChosen:
+                    if self.text_continue2.collidepoint(event.pos):
+
+                        self.amountChosen = True
 
                 if event.button == 1:  # Left mouse button
                     if (self.handle_x - 15 <= event.pos[0] <= self.handle_x + 15 and
@@ -180,3 +194,4 @@ class Introduction:
 
                 if event.key == K_ESCAPE:
                     pygame.quit()
+                    sys.exit()
