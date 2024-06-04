@@ -21,4 +21,4 @@ duration = 6000 #10 seconds
 #Player info
 usage = 0
 timer = 10
-carrots = 0
+carrots = 8

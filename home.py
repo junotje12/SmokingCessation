@@ -17,20 +17,20 @@ class Home:
 #        GPIO.setmode(GPIO.BMC)
 #        GPIO.setup(17, GPIO.OUT)
 
-        self.bird1 = pygame.image.load('./Sprites/bird1.png')
-        self.dest1 = (random.randint(20,200),random.randint(20,300))
-        self.bird2 = pygame.image.load('./Sprites/bird2.png')
-        self.dest2 = (random.randint(60, 200), random.randint(20, 300))
-        self.bird3 = pygame.image.load('./Sprites/bird3.png')
-        self.dest3 = (random.randint(100, 200), random.randint(20, 300))
+        self.bird1 = pygame.image.load('./Sprites/Untitled_Artwork-2.png')
+        self.dest1 = (random.randint(-20,100),random.randint(20,100))
+        self.bird2 = pygame.image.load('./Sprites/Untitled_Artwork-3.png')
+        self.dest2 = (random.randint(-30, 100), random.randint(60, 160))
+        self.bird3 = pygame.image.load('./Sprites/Untitled_Artwork-4 2.png')
+        self.dest3 = (random.randint(-40, 100), random.randint(140, 300))
 
 
-        self.cat1 = pygame.image.load('./Sprites/cat1.png')
-        self.dest4 = (random.randint(20, 200), random.randint(20, 300))
-        self.cat2 = pygame.image.load('./Sprites/cat2.png')
-        self.dest5 = (random.randint(60, 200), random.randint(20, 300))
-        self.cat3 = pygame.image.load('./Sprites/cat3.png')
-        self.dest6 = (random.randint(100, 200), random.randint(20, 300))
+        self.cat1 = pygame.image.load('./Sprites/Untitled_Artwork-5.png')
+        self.dest4 = (random.randint(-20, 100), random.randint(20, 100))
+        self.cat2 = pygame.image.load('./Sprites/Untitled_Artwork-6.png')
+        self.dest5 = (random.randint(-30, 100), random.randint(20, 160))
+        self.cat3 = pygame.image.load('./Sprites/Untitled_Artwork-7.png')
+        self.dest6 = (random.randint(-40, 100), random.randint(20, 300))
 
         self.bird_amount = 0
         self.cat_amount = 0
