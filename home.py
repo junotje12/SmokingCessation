@@ -59,7 +59,6 @@ class Home:
 
 
         self.timer = Timer(settings.duration) # 10 seconds
-        self.buzzertimer = Timer(600)
 
 
     def start(self):
@@ -81,14 +80,7 @@ class Home:
         self.timer.update()
         #timer is timer since activation devided by 10 seconds
         if (int(pygame.time.get_ticks() - self.timer.start_time) / 1000) >= settings.duration/600:
-            self.buzzertimer.activate()
 
-            if timer.buzzer:
-                GPIO.output(17, GPIO.HIGH)
-
-                self.buzzertimer.buzzerupdate()
-            else:
-                GPIO.output(17, GPIO.LOW)
 
             self.carrot_timer = self.font1.render("Done!",
                                                   False, 'White')
