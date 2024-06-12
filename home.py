@@ -8,13 +8,15 @@ from pathlib import Path
 from timer import Timer
 import time
 from support import get_path
-import Rpi.GPIO as GPIO
+import os
+import RPi.GPIO as GPIO
 from settingScreen import Settings
 import random
 
 class Home:
     def __init__(self):
-        GPIO.setmode(GPIO.BMC)
+        GPIO.setmode(GPIO.BCM)
+        GPIO.setwarnings(False)
         GPIO.setup(17, GPIO.OUT)
         GPIO.setup(21, GPIO.IN)
         self.shopping = False
@@ -173,7 +175,7 @@ class Home:
         pass
     def goals(self):
         print('goals')
-        #GPIO.output(17, GPIO.HIGH)
+        GPIO.output(17, GPIO.HIGH)
 
         self.select = False
         pass
@@ -187,6 +189,7 @@ class Home:
 
         print(settings.carrots)
         self.timer.update()
+        GPIO.output(17, GPIO.LOW)
 
         self.select = False
         pass
