@@ -12,9 +12,10 @@ from home import Home
 class Introduction:
     def __init__(self):
         self.dragging = False
+        self.negenennegentig = str('99')
 
         font_path = get_path('./font/LycheeSoda.ttf')
-        self.TASC = pygame.image.load('./Sprites/TASC.png')
+        self.TASC = pygame.image.load('./Sprites/Pixel_art.png')
         self.amountChosen = False
         self.intro = True
         self.numberwidth = 0.75
@@ -23,7 +24,7 @@ class Introduction:
         self.font3 = pygame.font.Font(font_path, int(SCREEN_WIDTH/self.numberwidth))
         self.screen = pygame.display.set_mode((SCREEN_WIDTH, SCREEN_HEIGHT), pygame.FULLSCREEN)
         self.display_surface = pygame.display.get_surface()
-        self.slider_pos = (SCREEN_WIDTH/2 - 70, SCREEN_HEIGHT -80)
+        self.slider_pos = (SCREEN_WIDTH/2 - 170, SCREEN_HEIGHT -100)
 
         self.handle_x = self.slider_pos[0]
         self.handle_y = self.slider_pos[1] + 10 // 2
@@ -39,8 +40,10 @@ class Introduction:
         if self.intro:
 
             self.grass.run2()
+            self.display_surface.blit(self.TASC,(0,0))
 
-            self.TASH_text = self.font1.render("Welcome to T.A.S.H", False, 'White')
+
+            self.TASH_text = self.font1.render("Welcome to T.A.S.C", False, 'White')
             self.info_text = self.font2.render('To Assist Smoking Cessation Habits', False, 'White')
             self.continue_text = self.font1.render("CONTINUE", False, 'White')
 
@@ -51,7 +54,7 @@ class Introduction:
                 midbottom=(SCREEN_WIDTH / 2, SCREEN_HEIGHT / 3))
 
             self.text_continue = self.continue_text.get_rect(
-                midbottom=(SCREEN_WIDTH / 2, SCREEN_HEIGHT / 2))
+                midbottom=(SCREEN_WIDTH / 2, SCREEN_HEIGHT / 1.25))
             #pygame.draw.rect(self.display_surface, 'Black',
              #                self.text_TASH.inflate(10, 10), 0, 4)
             #pygame.draw.rect(self.display_surface, 'Black',
@@ -62,7 +65,6 @@ class Introduction:
             #self.display_surface.blit(self.TASH_text, self.text_TASH)
             #self.display_surface.blit(self.info_text, self.text_info)
             self.display_surface.blit(self.continue_text, self.text_continue)
-            self.display_surface.blit(self.TASC,(0,0))
             pygame.display.update()
             self.input()
 
@@ -87,34 +89,37 @@ class Introduction:
 
             if settings.usage <= 0:
                 settings.usage = 0
+                self.usageXpos = 0
 
             if settings.usage >= 10:
-                self.blackwidth = SCREEN_WIDTH/2 - 10
-                self.usageXpos = 10
+                self.blackwidth = SCREEN_WIDTH/2 -20
+                self.usageXpos = 8
 
             elif settings.usage >= 20:
 
-                self.blackwidth = SCREEN_WIDTH/2
-                self.usageXpos = 20
-                self.numberwidth = 0.85
+                self.blackwidth = SCREEN_WIDTH/2 - 30
+                self.usageXpos = 11
+                #self.numberwidth = 0.85
 
             else:
                 self.usageXpos = 3.6
-                self.blackwidth = SCREEN_WIDTH/10
+                #self.blackwidth = SCREEN_WIDTH/10
                 self.text_usage = self.continue_text.get_rect(
                     midbottom=(SCREEN_WIDTH / 2, SCREEN_HEIGHT / 1.85))
             self.text_nowsmoke = self.nowsmoke.get_rect(
-                midbottom=(SCREEN_WIDTH / 2, SCREEN_HEIGHT / 14))
+                midbottom=(SCREEN_WIDTH / 2, SCREEN_HEIGHT / 8))
 
             pygame.draw.rect(self.display_surface, 'Black',
-                             self.text_usage.inflate(self.blackwidth, 200), 0, 4)
+                             self.text_usage.inflate(self.blackwidth, 400), 0, 4)
             pygame.draw.rect(self.display_surface, 'Black',
-                             self.text_nowsmoke.inflate(10, 10), 0, 4)
+                             self.text_nowsmoke.inflate(10, 10), 0, 0)
 
             pygame.draw.rect(self.display_surface, 'White',
                              self.text_nowsmoke.inflate(10, 10), 4, 4)
 
+
             self.display_surface.blit(self.usage_text,(SCREEN_WIDTH/self.usageXpos , SCREEN_HEIGHT/24))
+
             self.display_surface.blit(self.nowsmoke, self.text_nowsmoke)
 
             self.continue_text2 = self.font1.render("CONTINUE", False, 'White')
@@ -130,15 +135,13 @@ class Introduction:
             # run slider here
 
 
-            pygame.draw.rect(self.screen, (255,255,255), (*self.slider_pos, SCREEN_WIDTH-100, 10))
+            pygame.draw.rect(self.screen, (255,255,255), (*self.slider_pos, SCREEN_WIDTH- 100, 10))
 
             pygame.draw.circle(self.screen, (0,0,0), (self.handle_x, self.handle_y), 15)
 
             slider_value = int(((self.handle_x - self.slider_pos[0]) / 15)* 5)
-
-            print(slider_value)
-
-            settings.usage = slider_value
+            if slider_value < 99:
+                settings.usage = slider_value
             pygame.display.update()
 
         if settings.usage > 0 and settings.usage <= 5:

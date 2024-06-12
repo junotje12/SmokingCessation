@@ -19,21 +19,26 @@ class Home:
         GPIO.setwarnings(False)
         GPIO.setup(17, GPIO.OUT)
         GPIO.setup(21, GPIO.IN)
+        self.HSBG = pygame.image.load('./Sprites/homescrBackground.png')
+        self.inmenu = False
         self.shopping = False
+        self.shopsprite = pygame.image.load('./Sprites/shop.png')
+        self.settingsprite = pygame.image.load('./Sprites/settings.png')
+
         self.bird1 = pygame.image.load('./Sprites/Untitled_Artwork-2.png')
-        self.dest1 = (random.randint(-20,100),random.randint(20,100))
+        self.dest1 = (random.randint(0,100),random.randint(280,600))
         self.bird2 = pygame.image.load('./Sprites/Untitled_Artwork-3.png')
-        self.dest2 = (random.randint(-30, 100), random.randint(60, 160))
+        self.dest2 = (random.randint(0, 100), random.randint(280, 600))
         self.bird3 = pygame.image.load('./Sprites/Untitled_Artwork-4 2.png')
-        self.dest3 = (random.randint(-40, 100), random.randint(140, 300))
+        self.dest3 = (random.randint(0, 100), random.randint(280, 600))
 
 
         self.cat1 = pygame.image.load('./Sprites/Untitled_Artwork-5.png')
-        self.dest4 = (random.randint(-20, 100), random.randint(20, 100))
+        self.dest4 = (random.randint(0, 100), random.randint(280, 600))
         self.cat2 = pygame.image.load('./Sprites/Untitled_Artwork-6.png')
-        self.dest5 = (random.randint(-30, 100), random.randint(20, 160))
+        self.dest5 = (random.randint(0, 100), random.randint(280, 600))
         self.cat3 = pygame.image.load('./Sprites/Untitled_Artwork-7.png')
-        self.dest6 = (random.randint(-40, 100), random.randint(20, 300))
+        self.dest6 = (random.randint(0, 100), random.randint(280, 600))
 
         self.bird_amount = 0
         self.cat_amount = 0
@@ -73,6 +78,11 @@ class Home:
         #self.screen.fill(settings.BACKGROUND_C)
 
         self.grass2.run2()
+        self.screen.blit(self.HSBG,(0,0))
+        self.screen.blit(self.shopsprite, (SCREEN_WIDTH/2 + 10, 20))
+        self.screen.blit(self.settingsprite, (20, 20))
+
+
         self.selecter()
 
         #self.timer.activate()
@@ -108,34 +118,36 @@ class Home:
         self.screen.blit(self.carrot_amount, self.amount_carrot)
         #print(settings.carrots)
         #pygame.display.update()
-        if self.bird_amount > 0:
-            self.screen.blit(self.bird1, self.dest1)
-        if self.bird_amount > 1:
+        if not self.inmenu:
+            if self.bird_amount > 0:
+                self.screen.blit(self.bird1, self.dest1)
+            if self.bird_amount > 1:
 
-            self.screen.blit(self.bird1, self.dest1)
-            self.screen.blit(self.bird2, self.dest2)
-        if self.bird_amount >2:
+                self.screen.blit(self.bird1, self.dest1)
+                self.screen.blit(self.bird2, self.dest2)
+            if self.bird_amount >2:
 
-            self.screen.blit(self.bird1, self.dest1)
-            self.screen.blit(self.bird2, self.dest2)
-            self.screen.blit(self.bird3, self.dest3)
+                self.screen.blit(self.bird1, self.dest1)
+                self.screen.blit(self.bird2, self.dest2)
+                self.screen.blit(self.bird3, self.dest3)
 
 
-        if self.cat_amount > 0:
-            self.screen.blit(self.cat1, self.dest4)
-        if self.cat_amount > 1:
+            if self.cat_amount > 0:
+                self.screen.blit(self.cat1, self.dest4)
+            if self.cat_amount > 1:
 
-            self.screen.blit(self.cat1, self.dest4)
-            self.screen.blit(self.cat2, self.dest5)
-        if self.cat_amount >2:
+                self.screen.blit(self.cat1, self.dest4)
+                self.screen.blit(self.cat2, self.dest5)
+            if self.cat_amount >2:
 
-            self.screen.blit(self.cat1, self.dest4)
-            self.screen.blit(self.cat2, self.dest5)
-            self.screen.blit(self.cat3, self.dest6)
+                self.screen.blit(self.cat1, self.dest4)
+                self.screen.blit(self.cat2, self.dest5)
+                self.screen.blit(self.cat3, self.dest6)
 
 
 
     def settings(self):
+        self.inmenu = True
 
         self.screen.fill(settings.BACKGROUND_C)
         self.settings_text = self.font2.render("settings", False, 'White')
@@ -159,6 +171,7 @@ class Home:
         print('settings')
         if self.quit:
             self.screen.fill(settings.BACKGROUND_C)
+            self.inmenu = False
             self.select = False
             self.quit = False
 
@@ -186,6 +199,7 @@ class Home:
         self.select = False
         pass
     def shop(self):
+        self.inmenu = True
 
         self.shopping = True
         self.screen.fill(settings.BACKGROUND_C)
@@ -195,11 +209,11 @@ class Home:
         self.cat_text = self.font2.render("Buy Cat : 1 Carrot", False, 'White')
 
         self.text_bird = self.bird_text.get_rect(
-            topleft=(50, 60))
+            topleft=(50, 100))
 
 
         self.text_cat = self.cat_text.get_rect(
-            topleft=(50, 100))
+            topleft=(50, 180))
         self.text_shop = self.shop_text.get_rect(
             topleft=(50, 20))
 
@@ -223,6 +237,7 @@ class Home:
             self.shopping = False
             self.select = False
             self.quit = False
+            self.inmenu = False
 
 
 
