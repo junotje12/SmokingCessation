@@ -8,15 +8,16 @@ from pathlib import Path
 from timer import Timer
 import time
 from support import get_path
-#import Rpi.GPIO as GPIO
+import Rpi.GPIO as GPIO
 from settingScreen import Settings
 import random
 
 class Home:
     def __init__(self):
-#        GPIO.setmode(GPIO.BMC)
-#        GPIO.setup(17, GPIO.OUT)
-
+        GPIO.setmode(GPIO.BMC)
+        GPIO.setup(17, GPIO.OUT)
+        GPIO.setup(21, GPIO.IN)
+        self.shopping = False
         self.bird1 = pygame.image.load('./Sprites/Untitled_Artwork-2.png')
         self.dest1 = (random.randint(-20,100),random.randint(20,100))
         self.bird2 = pygame.image.load('./Sprites/Untitled_Artwork-3.png')
@@ -80,12 +81,12 @@ class Home:
         if (int(pygame.time.get_ticks() - self.timer.start_time) / 1000) >= settings.duration/600:
             self.buzzertimer.activate()
 
- #           if timer.buzzer:
- #               GPIO.output(17, GPIO.HIGH)
+            if timer.buzzer:
+                GPIO.output(17, GPIO.HIGH)
 
- #               self.buzzertimer.buzzerupdate()
-#            else:
- #               GPIO.output(17, GPIO.LOW)
+                self.buzzertimer.buzzerupdate()
+            else:
+                GPIO.output(17, GPIO.LOW)
 
             self.carrot_timer = self.font1.render("Done!",
                                                   False, 'White')
@@ -191,6 +192,7 @@ class Home:
         pass
     def shop(self):
 
+        self.shopping = True
         self.screen.fill(settings.BACKGROUND_C)
         self.shop_text = self.font2.render("shop", False, 'White')
 
@@ -223,8 +225,10 @@ class Home:
 
         if self.quit:
             self.screen.fill(settings.BACKGROUND_C)
+            self.shopping = False
             self.select = False
             self.quit = False
+
 
 
         pass
@@ -251,18 +255,19 @@ class Home:
 
 
             if event.type == pygame.MOUSEBUTTONDOWN:
-                if self.text_bird.collidepoint(event.pos):
-                    if settings.carrots > 0:
-                        self.bird_bought = True
-                        self.bird_amount = self.bird_amount + 1
-                        settings.carrots = settings.carrots - 1
-                        self.bird_bought = False
-                if self.text_cat.collidepoint(event.pos):
-                    if settings.carrots > 0:
-                        self.cat_bought = True
-                        self.cat_amount = self.cat_amount + 1
-                        settings.carrots = settings.carrots - 1
-                        self.cat_bought = False
+                if self.shopping:
+                    if self.text_bird.collidepoint(event.pos):
+                        if settings.carrots > 0:
+                            self.bird_bought = True
+                            self.bird_amount = self.bird_amount + 1
+                            settings.carrots = settings.carrots - 1
+                            self.bird_bought = False
+                    if self.text_cat.collidepoint(event.pos):
+                        if settings.carrots > 0:
+                            self.cat_bought = True
+                            self.cat_amount = self.cat_amount + 1
+                            settings.carrots = settings.carrots - 1
+                            self.cat_bought = False
             if event.type == QUIT:
                 pygame.quit()
                 sys.exit()
