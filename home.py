@@ -66,6 +66,12 @@ class Home:
         self.currentpos = [self.pos1, self.pos2, self.pos3, self.pos4]
         self.CarrotCollect = False
         self.quit = False
+
+
+        self.Apos = pygame.Rect(self.pos1)
+        self.Bpos = pygame.Rect(self.pos2)
+        self.Cpos = pygame.Rect(self.pos3)
+        self.Dpos = pygame.Rect(self.pos4)
         font_path = get_path('./font/LycheeSoda.ttf')
         self.font1 = pygame.font.Font(font_path, int(settings.SCREEN_WIDTH/8.7))
 
@@ -180,7 +186,7 @@ class Home:
             self.inmenu = False
             self.select = False
             self.quit = False
-
+            self.currentpos = [self.pos1, self.pos2, self.pos3, self.pos4]
 
         pass
     def goals(self):
@@ -200,6 +206,8 @@ class Home:
 
 #        GPIO.output(17, GPIO.HIGH)
         if self.quit:
+            self.currentpos = [self.pos2, self.pos3, self.pos4, self.pos1]
+
             self.select = False
         pass
     def smokingInd(self):
@@ -255,8 +263,7 @@ class Home:
             self.select = False
             self.quit = False
             self.inmenu = False
-
-
+            self.currentpos = [self.pos1, self.pos2, self.pos3, self.pos4]
 
         pass
 
@@ -278,10 +285,14 @@ class Home:
 
 
     def input(self):
+
         for event in pygame.event.get():
 
 
             if event.type == pygame.MOUSEBUTTONDOWN:
+
+
+
                 if self.shopping:
                     if self.text_bird.collidepoint(event.pos):
                         if settings.carrots > 0:
