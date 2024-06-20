@@ -15,7 +15,7 @@ class Introduction:
         self.negenennegentig = str('99')
 
         font_path = get_path('./font/LycheeSoda.ttf')
-        self.TASC = pygame.image.load('./Sprites/Pixel_art.png')
+        self.TASC = pygame.image.load('./Sprites/TASC.png')
         self.amountChosen = False
         self.intro = True
         self.numberwidth = 0.75

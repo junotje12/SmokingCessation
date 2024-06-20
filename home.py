@@ -9,16 +9,16 @@ from timer import Timer
 import time
 from support import get_path
 import os
-import RPi.GPIO as GPIO
+#import RPi.GPIO as GPIO
 from settingScreen import Settings
 import random
 
 class Home:
     def __init__(self):
-        GPIO.setmode(GPIO.BCM)
-        GPIO.setwarnings(False)
-        GPIO.setup(17, GPIO.OUT)
-        GPIO.setup(21, GPIO.IN)
+#        GPIO.setmode(GPIO.BCM)
+#        GPIO.setwarnings(False)
+#        GPIO.setup(17, GPIO.OUT)
+#        GPIO.setup(21, GPIO.IN)
         self.HSBG = pygame.image.load('./Sprites/homescrBackground.png')
         self.inmenu = False
         self.shopping = False
@@ -28,17 +28,26 @@ class Home:
         self.bird1 = pygame.image.load('./Sprites/Untitled_Artwork-2.png')
         self.dest1 = (random.randint(0,100),random.randint(280,600))
         self.bird2 = pygame.image.load('./Sprites/Untitled_Artwork-3.png')
-        self.dest2 = (random.randint(0, 100), random.randint(280, 600))
+        self.dest2 = (random.randint(50, 250), random.randint(280, 600))
         self.bird3 = pygame.image.load('./Sprites/Untitled_Artwork-4 2.png')
-        self.dest3 = (random.randint(0, 100), random.randint(280, 600))
+        self.dest3 = (random.randint(100, 300), random.randint(280, 600))
+
+        self.stage = 1
+        self.prog1 = pygame.image.load('./Sprites/Progress1.png')
+        self.prog2 = pygame.image.load('./Sprites/Progress2.png')
+        self.prog3 = pygame.image.load('./Sprites/Progress3.png')
+        self.prog4 = pygame.image.load('./Sprites/Progress4.png')
+        self.prog5 = pygame.image.load('./Sprites/Progress5.png')
+        self.prog6 = pygame.image.load('./Sprites/Progress6.png')
 
 
         self.cat1 = pygame.image.load('./Sprites/Untitled_Artwork-5.png')
+
         self.dest4 = (random.randint(0, 100), random.randint(280, 600))
         self.cat2 = pygame.image.load('./Sprites/Untitled_Artwork-6.png')
-        self.dest5 = (random.randint(0, 100), random.randint(280, 600))
+        self.dest5 = (random.randint(50, 200), random.randint(280, 600))
         self.cat3 = pygame.image.load('./Sprites/Untitled_Artwork-7.png')
-        self.dest6 = (random.randint(0, 100), random.randint(280, 600))
+        self.dest6 = (random.randint(100, 300), random.randint(280, 600))
 
         self.bird_amount = 0
         self.cat_amount = 0
@@ -79,8 +88,6 @@ class Home:
 
         self.grass2.run2()
         self.screen.blit(self.HSBG,(0,0))
-        self.screen.blit(self.shopsprite, (SCREEN_WIDTH/2 + 10, 20))
-        self.screen.blit(self.settingsprite, (20, 20))
 
 
         self.selecter()
@@ -168,24 +175,34 @@ class Home:
         self.screen.blit(self.user_amount_text, self.text_user_amount)
         self.screen.blit(self.settings_text, self.text_settings)
 
-        print('settings')
         if self.quit:
             self.screen.fill(settings.BACKGROUND_C)
             self.inmenu = False
             self.select = False
             self.quit = False
 
-        print(settings.usage)
 
         pass
     def goals(self):
-        print('goals')
-        GPIO.output(17, GPIO.HIGH)
+        self.inmenu = True
+        if self.stage == 1:
+            self.screen.blit(self.prog1, (0,0))
+        elif self.stage == 2:
+            self.screen.blit(self.prog2, (0,0))
+        elif self.stage == 3:
+            self.screen.blit(self.prog3, (0,0))
+        elif self.stage == 4:
+            self.screen.blit(self.prog4, (0,0))
+        elif self.stage == 5:
+            self.screen.blit(self.prog5, (0,0))
+        else:
+            self.screen.blit(self.prog6, (0,0))
 
-        self.select = False
+#        GPIO.output(17, GPIO.HIGH)
+        if self.quit:
+            self.select = False
         pass
     def smokingInd(self):
-        print('Smoking Ind')
 
         if self.timer.carrot:
             settings.carrots = settings.carrots + 1
@@ -194,7 +211,7 @@ class Home:
 
         print(settings.carrots)
         self.timer.update()
-        GPIO.output(17, GPIO.LOW)
+#        GPIO.output(17, GPIO.LOW)
 
         self.select = False
         pass
@@ -292,7 +309,11 @@ class Home:
                     self.currentpos.insert(len(self.currentpos),y)
 
                 if event.key == K_e:
+                    self.quit = False
                     self.select = True
+
+                if event.key == K_r:
+                    self.stage = self.stage + 1
 
                 if event.key == K_q:
                     self.quit = True
